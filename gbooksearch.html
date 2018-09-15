@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    
+<head>   
+<meta charset="utf-8">
+    
+<title>Milestone 1</title>
+    
+<link rel="stylesheet" href="*">
+    
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"> 
+</script>
+    
+</head>
+    
+<body>
+    
+<div id="books">   
+<h1>Google Book Search:</h1>
+       
+</div>
+
+</body>
+    
+<script>
+$.getJSON("json-files/google-books-search.json", function(data) {
+				for (var i = 0; i < data.items.length; i++) {
+					var item = data.items[i].volumeInfo;
+					$("#books").append("<div><img src='"+item["imageLinks"]["thumbnail"]+"' alt='"+item["title"]+"'/><span><strong>Title:</strong> "+item["title"]+"</span><br/><span><strong>Subtitle:</strong> "+item["subtitle"]+"</span><br/><span><strong>Author:</strong> "+item["authors"][0]+"</span><br/><span><strong>Description:</strong><details><summary>Toggle Description</summary><p>"+item["description"]+"</p></details></span></br><span><strong>ISBN 10:</strong> "+item["industryIdentifiers"][0]["identifier"]+"</span></br><span><strong>ISBN 13:</strong> "+item["industryIdentifiers"][1]["identifier"]+"</span></div><div class='clear'></div><br/><hr/>");
+				}
+			});
+
+
+</script>
+</html>
