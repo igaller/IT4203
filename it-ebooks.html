@@ -17,7 +17,7 @@
     
    body {
         border: 2px solid black;
-        white-space: normal;   
+        white-space: normal; 
     }
 
     img {
@@ -82,7 +82,7 @@
 $.getJSON("json-files/it-ebooks-search.json", function(data) {
     for (var i = 0; i < data.Books.length; i++) {
         var item = data.Books[i];
-            $("#it-ebooks").append("<div><img src='"+item["Image"]+"' alt='"+item["Title"]+"'/><span><br/><strong>Title:</strong> "+item["Title"]+"</span><br/><span><strong>Subtitle:</strong> "+item["SubTitle"]+"</span><br/><span><strong>Description:</strong> "+item["Description"]+"</span></br><span><strong>ISBN:"+item["isbn"]+"</span></div><br/>");
+            $("#it-ebooks").append("<div><img src='"+item["Image"]+"' alt='"+item["Title"]+"'/><span><br/><strong>Title:</strong> "+item["Title"]+"</span><br/><span><strong>Subtitle:</strong> "+item["SubTitle"]+"</span><br/><span><br/><strong>Description:</strong> "+item["Description"]+"</span></br><span><br/><strong>ISBN:"+item["isbn"]+"</span></div><br/>");
 				}
 			});
 </script>

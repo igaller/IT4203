@@ -79,7 +79,7 @@
 <script> 
 $.getJSON("json-files/google-books-book.json", function(res) {
     var data = res["volumeInfo"];
-        $("#gbooksbook").append("<div><img src='"+data["imageLinks"]["small"]+"' alt='"+data["title"]+"'/><span><strong>Title:</strong> "+data["title"]+"</span><br/><span><strong>Subtitle:</strong> "+data["subtitle"]+"</span><br/><span><strong>Author:</strong> "+data["authors"][0]+"</span><br/><span><strong>Description:</strong>"+data["description"]+"</div></details></span><span><strong>ISBN 10:</strong> "+data["industryIdentifiers"][0]["identifier"]+"</span></br><span><strong>ISBN 13: </strong>"+data["industryIdentifiers"][1]["identifier"]+"</span></div><div class='clear'></div><br/>");
+        $("#gbooksbook").append("<div><img src='"+data["imageLinks"]["small"]+"' alt='"+data["title"]+"'/><span><strong>Title:</strong> "+data["title"]+"</span><br/><span><strong>Subtitle:</strong> "+data["subtitle"]+"</span><br/><span><strong>Author:</strong> "+data["authors"][0]+"</span><br/><span><strong>Description:</strong>"+data["description"]+"</div></details></span><span><strong>ISBN 10:</strong> "+data["industryIdentifiers"][0]["identifier"]+"</span></br><span><strong>ISBN 13: </strong>"+data["industryIdentifiers"][1]["identifier"]+"</span></div><div class='clear'></div><br/><span>");
 			});
 </script>    
     
