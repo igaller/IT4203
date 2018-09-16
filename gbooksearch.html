@@ -20,16 +20,29 @@
        
 </div>
 
-</body>
-    
-<script>
+  <script>
 $.getJSON("json-files/google-books-search.json", function(data) {
 				for (var i = 0; i < data.items.length; i++) {
 					var item = data.items[i].volumeInfo;
 					$("#books").append("<div><img src='"+item["imageLinks"]["thumbnail"]+"' alt='"+item["title"]+"'/><span><strong>Title:</strong> "+item["title"]+"</span><br/><span><strong>Subtitle:</strong> "+item["subtitle"]+"</span><br/><span><strong>Author:</strong> "+item["authors"][0]+"</span><br/><span><strong>Description:</strong><details><summary>Toggle Description</summary><p>"+item["description"]+"</p></details></span></br><span><strong>ISBN 10:</strong> "+item["industryIdentifiers"][0]["identifier"]+"</span></br><span><strong>ISBN 13:</strong> "+item["industryIdentifiers"][1]["identifier"]+"</span></div><div class='clear'></div><br/><hr/>");
 				}
 			});
+</script>  
+    
+    <footer>
+        <div class="footer">
+            Last Updated: September 15, 2018 |
+<a href="../IT4203/index.html">Home</a>
+<a href="../IT4203/Milestone1.html">Milestone 1</a>
+<a href="../IT4203/Milestone2.html">Milestone 2</a>
+<a href="../IT4203/Milestone3.html">Milestone 3</a>
+            | KSU IT4203 &copy; 2018
+                </div>
+    </footer>
+</body>
+    
 
-
-</script>
+    
+    
+    
 </html>
