@@ -1,22 +1,83 @@
 <!DOCTYPE html>
+
 <html>
     
 <head>   
+    
 <meta charset="utf-8">
     
 <title>Milestone 1</title>
     
-<link rel="stylesheet" href="*">
+<h1>Google Book Search:</h1>
     
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"> 
 </script>
+   
+<style>
+    
+   body {
+        border: 2px solid black;
+        white-space: normal;   
+    }
+
+    img {
+		display: block;
+		margin: 1 auto;
+        float: right;
+        width: 150px;
+        padding: 8px;
+        }
+    
+    h1  {
+        text-align: center;
+    }
+    
+    nav {
+        text-align: center;
+        font-family: serif;
+        border-bottom: 2px solid black;  
+    }
+    
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+    
+    a { 
+        color: black;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        color: blue;
+    }
+    
+    footer {
+        border-top: 2px solid black;
+        text-align: center;
+        font-family: serif;
+        font-size: 1em;
+    }
+
+</style>
     
 </head>
     
 <body>
+ 
+ <nav>
+    <ul>
+        <a href="index.html">Home</a> |
+        <a href="Milestone1.html">Milestone I</a> |
+        <a href="Milestone2.html">Milestone II</a> |
+        <a href="Milestone3.html">Milestone III</a>
     
-<div id="books">   
-<h1>Google Book Search:</h1>
+    </ul>
+</nav>
+    
+<div id="gbooksearch">   
+
        
 </div>
 
@@ -24,7 +85,7 @@
 $.getJSON("json-files/google-books-search.json", function(data) {
 				for (var i = 0; i < data.items.length; i++) {
 					var item = data.items[i].volumeInfo;
-					$("#books").append("<div><img src='"+item["imageLinks"]["thumbnail"]+"' alt='"+item["title"]+"'/><span><strong>Title:</strong> "+item["title"]+"</span><br/><span><strong>Subtitle:</strong> "+item["subtitle"]+"</span><br/><span><strong>Author:</strong> "+item["authors"][0]+"</span><br/><span><strong>Description:</strong><details><summary>Toggle Description</summary><p>"+item["description"]+"</p></details></span></br><span><strong>ISBN 10:</strong> "+item["industryIdentifiers"][0]["identifier"]+"</span></br><span><strong>ISBN 13:</strong> "+item["industryIdentifiers"][1]["identifier"]+"</span></div><div class='clear'></div><br/><hr/>");
+					$("#gbooksearch").append("<div><table><tr><img src='"+item["imageLinks"]["thumbnail"]+"' alt='"+item["title"]+"'/><span><strong>Title:</strong> "+item["title"]+"</span><br/><span><strong>Subtitle:</strong> "+item["subtitle"]+"</span><br/><span><strong>Author:</strong> "+item["authors"][0]+"</span><br/><span><strong>Description:</strong>< Description<p>"+item["description"]+"</p></span></br><span><strong>ISBN 10:</strong> "+item["industryIdentifiers"][0]["identifier"]+"</span></br><span><strong>ISBN 13:</strong> "+item["industryIdentifiers"][1]["identifier"]+"</span></div><div class='clear'></div><br/><hr/>");
 				}
 			});
 </script>  
