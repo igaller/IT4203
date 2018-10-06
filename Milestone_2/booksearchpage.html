@@ -2,6 +2,7 @@
 
 <html>
 <head>
+    <meta charset="utf-8">
 	<title>Google Books Search</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"> 
@@ -17,31 +18,32 @@
 
 <div id="results"></div>
     
-<script>
+<!--<script>
     
     function bookSearch(){
         var search = document.getElementById('search').value;
         document.getElementById('results').innerHTML = "";
         console.log(search);
-        
+
         $.ajax({
-            url: "https://www.googleapis.com/books/v1/valumes?q=" +search, datatype: "json", 
+            url: "https://www.googleapis.com/books/v1/volumes?q=" +search, 
+            datatype: "json",
             success: function(data) {
                 for (i = 0; i < data.items.length; i++){
                     results.innerHTML += "<h2>" + data.items[i].volumeInfo.title + "</h2>";
                 }
             }
-            type: 'GET';
+
         });  
     }
     document.getElementById('button').addEventListener('click', bookSearch, false);
     
     
     
-</script>    
+</script> -->
 
     
-<!--<script>
+<script>
  
 document.getElementById("search").addEventListener("click", search);
     
@@ -61,7 +63,7 @@ for (i=0;i<item.items.length; i++) {
 })
 }              
         
-</script>-->
+</script>
 
 </body>
 </html>
