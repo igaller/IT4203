@@ -3,19 +3,69 @@
 <html>
 <head>
     <meta charset="utf-8">
+    
 	<title>Google Books Search</title>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+<style>
+    
+    body, html {
+        background-color: black;
+        height: 100%;
+    } 
+    
+    .hero-image {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("mainimg.jpg");
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
 
+    }
+    
+    .hero-text {
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+    }
+    
+    button {
+        font-size: 1.3em;
+        background: none;
+        border: none;
+        color: white;
+    }
+    
+    a:hover, a:visited, a:link, a:active {
+        text-decoration: none;
+        color: white;
+    }
+    
+    .search {
+        border: 1px solid black;
+    }
+     
+</style>    
+       
 </head>
+    
 <body>
-<h1 id="title">Google Books Search</h1>
-    
-<input placeholder="Search..." id="books">
-    
-<button id="search">Search</button>
-
-<div id="results"></div>
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1 id="title">Google Books Search</h1>
+                <input placeholder="Search..." id="books">
+                <button id="search">Search</button>
+            <button type="button"><a href="../Milestone_2/milestone2.html">Back</a></button>
+            <div id="results"></div>
+        </div>
+    </div>
     
 <script>
  
