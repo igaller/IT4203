@@ -1,34 +1,17 @@
 <!DOCTYPE html>
 
 <html>
+    
 <head>
+    
 	<title>Google Bookshelf</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>   
     <style>
         
     body, html {
-        background-color: black;
+        background-image: url(images.p.jpg);
         height: 100%;
     } 
-    
-    .hero-image {
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("mainimg.jpg");
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: relative;
-
-    }
-    
-    .hero-text {
-        text-align: center;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: white;
-    }
     
     button {
         font-size: 1.3em;
@@ -41,39 +24,112 @@
         text-decoration: none;
         color: white;
     }
-              
+        
+    h1 {
+            color: white;
+            text-align: center;
+        }
+        
+    nav {
+        
+        text-align: center;
+        font-family: serif;
+        border-bottom: 2px solid white;  
+    }
+        
+    footer {
+        
+        text-align: center;
+        font-family: serif;
+        border: 2px solid white;
+        color: white;
+        background-color: black;
+        font-size: 1.0em;
+        
+        }
+        
+    .borders {
+            border: 1px solid white;
+            white-space: 20px;
+            background-color: black;
+        }
+        
+    .background {
+            background-image: url(mainimg.jpg);
+            border: 1px solid white;
+            
+        }
+                  
     </style>
     
 </head>
+   
+<body>
+    
+    <div class="background">
+        
+    <h1>My Bookshelf: <span id="shelf"></span></h1>
+    
+    <nav>
+    <ul>
+        <a href="index.html">Home</a> |
+        <a href="Milestone1.html">Milestone I</a> |
+        <a href="Milestone_2/milestone2.html">Milestone II</a> |
+        <a href="Milestone3.html">Milestone III</a>
+    
+    </ul>
+</nav>  
+    </div>
+    
+    <h1 id="title"></h1>
+    
+    <div class="borders">
+        
+     <center>      
+         
+         
+         
+        <div id="results"></div>
+         
+     </center>
+        
+    </div>
+    
+    <div><button> Back </button></div>
+    <div><button><a href="milestone2.html"></a> Home </button></div>
+    
+    
+
 <script>
     $(function () {
 
-        var service_point1 = "https://www.googleapis.com/books/v1/users/110130775080784019945/bookshelves/1001/volumes";
+        var service_point = "https://www.googleapis.com/books/v1/users/110130775080784019945/bookshelves/1001/volumes";
 
-        $.getJSON(service_point1, function (json2) {
+        $.getJSON(service_point, function (json2) {
             resultHTML = "";
             for (i in json2.items) {
                 var booktitle = json2.items[i].volumeInfo.title;
                 var bookid = json2.items[i].id;
                 var cover = json2.items[i].volumeInfo.imageLinks.smallThumbnail;
 
-                resultHTML += "<div class='bookdiv'>";
-                resultHTML += "<img class='bookimg' src='" + cover + "'  />";
+                resultHTML += "<br><img src='" + cover + "'/><br>";
                 resultHTML += "<a href='bookdetails.html?id=" + bookid + "'>" + booktitle + "</a>";
-                resultHTML += "</div><br>";
             }
             $("#results").html(resultHTML);
             $(".bookdiv").css("width", "300px");
         });
     });
-</script>
+</script>       
+<footer>
+    <div class="footer">
+        Last Updated: September 15, 2018 |
+        <a href="../IT4203/index.html">Home</a> |
+        <a href="Milestone1.html">Milestone I</a> |
+        <a href="../IT4203/Milestone_2/Milestone2.html">Milestone II</a> |
+        <a href="../IT4203/Milestone3.html">Milestone III</a>
+        | KSU IT4203 &copy; 2018
+                </div>
+    </footer>
     
-<body>
-
-<h1 id="title"></h1>
-<h2>My Bookshelf: <span id="shelf"></span>
-</h2>
-<div id="results"></div>
-
 </body>
 </html>
