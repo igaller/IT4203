@@ -5,43 +5,17 @@
     <meta charset="utf-8">
 	<title>Google Books Search</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"> 
-</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 <body>
 <h1 id="title">Google Books Search</h1>
     
-<input placeholder="Search..." id="search">
+<input placeholder="Search..." id="books">
     
-<button type="button" id="button">Search</button>
+<button id="search">Search</button>
 
 <div id="results"></div>
-    
-<!--<script>
-    
-    function bookSearch(){
-        var search = document.getElementById('search').value;
-        document.getElementById('results').innerHTML = "";
-        console.log(search);
-
-        $.ajax({
-            url: "https://www.googleapis.com/books/v1/volumes?q=" +search, 
-            datatype: "json",
-            success: function(data) {
-                for (i = 0; i < data.items.length; i++){
-                    results.innerHTML += "<h2>" + data.items[i].volumeInfo.title + "</h2>";
-                }
-            }
-
-        });  
-    }
-    document.getElementById('button').addEventListener('click', bookSearch, false);
-    
-    
-    
-</script> -->
-
     
 <script>
  
@@ -55,9 +29,9 @@ function getBooks(search) {
 $.ajax({
 url: "https://www.googleapis.com/books/v1/volumes?q=" + search+"maxResults=60"
 }).done(function(data){
-var item = data;
-for (i=0;i<item.items.length; i++) {
-    
+//var item = data;
+for (i = 0; i < data.items.length; i++) {
+   var item = data.items[i];
     $("#results").append("<div><img src='"+item["Image"]+"' alt='"+item["Title"]+"'/><span><br/><strong>Title:</strong> "+item["Title"]+"</span></div><br/>");
 				}
 })
