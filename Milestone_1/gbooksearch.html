@@ -82,7 +82,7 @@
 </div>
 
   <script>
-$.getJSON("json-files/google-books-search.json", function(data) {
+$.getJSON("../json-files/google-books-search.json", function(data) {
 				for (var i = 0; i < data.items.length; i++) {
 					var item = data.items[i].volumeInfo;
 					$("#gbooksearch").append("<div><table><tr><img src='"+item["imageLinks"]["thumbnail"]+"' alt='"+item["title"]+"'/><span><strong>Title:</strong> "+item["title"]+"</span><br/><span><strong>Subtitle:</strong> "+item["subtitle"]+"</span><br/><span><strong>Author:</strong> "+item["authors"][0]+"</span><br/><span><br/><strong>Description: </strong><Description<p>"+item["description"]+"</p></span></br><span><strong>ISBN 10:</strong> "+item["industryIdentifiers"][0]["identifier"]+"</span></br><span><strong>ISBN 13:</strong> "+item["industryIdentifiers"][1]["identifier"]+"</span></div><div class='clear'></div><br/><hr/>");
