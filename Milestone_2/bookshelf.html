@@ -2,20 +2,26 @@
 
 <html>
 <head>
-	<title>Google Books Search</title>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
+	<title>Google Bookshelf</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>   
+    <style>
+    
+        
+        .bookimg {
+            border: 2px solid black;
+        }
+           
+        
+        
+    </style>
+    
 </head>
 <script>
     $(function () {
 
-        var service_point1 = "https://www.googleapis.com/books/v1/users/117133542904398879136/bookshelves/1001/";
-        var service_point2 = "https://www.googleapis.com/books/v1/users/117133542904398879136/bookshelves/1001/volumes";
+        var service_point1 = "https://www.googleapis.com/books/v1/users/110130775080784019945/bookshelves/1001/volumes";
 
-        $.getJSON(service_point2, function (json2) {
-
-            //$("#shelf").text(json.title); 
-
+        $.getJSON(service_point1, function (json2) {
             resultHTML = "";
             for (i in json2.items) {
                 var booktitle = json2.items[i].volumeInfo.title;
@@ -23,9 +29,9 @@
                 var cover = json2.items[i].volumeInfo.imageLinks.smallThumbnail;
 
                 resultHTML += "<div class='bookdiv'>";
-                resultHTML += "<img src='" + cover + "' style='float: left' />";
-                resultHTML += "<a href='bookinfo.php?id=" + bookid + "'>" + booktitle + "</a>";
-                resultHTML += "</div>";;
+                resultHTML += "<img class='bookimg' src='" + cover + "'  />";
+                resultHTML += "<a href='bookdetails.html?id=" + bookid + "'>" + booktitle + "</a>";
+                resultHTML += "</div><br>";
             }
             $("#results").html(resultHTML);
             $(".bookdiv").css("width", "300px");
@@ -35,9 +41,9 @@
 <body>
 
 <h1 id="title"></h1>
-<h2>Bookshelf Name: <span id="shelf"></span>
+<h2>My Bookshelf: <span id="shelf"></span>
 </h2>
-<div id="results" style="display: flex; flex-wrap: wrap;"></div>
+<div id="results"></div>
 
 </body>
 </html>
