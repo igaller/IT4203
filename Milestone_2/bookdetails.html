@@ -5,6 +5,7 @@
 <head>
 	<title>Google Book Info</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script>
     $(function(){
         var url = new URL(window.location.href);
@@ -34,7 +35,7 @@
     
 <style>
     
-       button {
+    button {
         font-size: 1.3em;
         background: none;
         border: none;
@@ -45,6 +46,11 @@
         color: white;
         background-color: black;
     }
+    
+     body, html {
+        background-image: url(images.p.jpg);
+        height: 100%;
+    } 
     
     .background {
             background-image: url(mainimg.jpg);
@@ -103,8 +109,7 @@
         } 
     
 </style>
-    
-    
+       
 </head>
 
 <body>
@@ -123,18 +128,22 @@
 </div> 
     
     <br>
+      
+<center>  
     
     <div class="borders">
-
-   
-<h1 id="title"></h1>
-<p><a id="webpage"></a></p>
-<img id="cover" height=200 />
-<p>Categories:</p>
-<div id="category"></div>
+        <div class="w3-container">  
+            <h1 id="title"></h1>
+                <p><a id="webpage"></a></p>
+                    <img id="cover" height=200 />
+                        <p>Categories:</p>
+                            <div id="category"></div>
+        </div>
     </div>
     
-    <br>
+</center>
+    
+<br>
     
 <footer class="footer">
         
