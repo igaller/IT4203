@@ -47,6 +47,11 @@
         width: 800px;
     }
     
+    .bookdiv {
+	padding: 20px 20px 20px 20px;
+        text-align: center;
+    }
+    
     * {
     box-sizing: border-box;
 }
@@ -103,16 +108,20 @@
     
 <br>  
     
-    <div style="text-align: center;">
-    <input placeholder="Search..." id="search" style="height: 30px; width: 300px;"autofocus/>
+<div style="text-align: center;">
         
-    <button><a href=""></a>Search</button>
-     
-    <button><a href="../Milestone_2/milestone2.html">Back</a></button></div>  
+<form id="searchbar">
+<input id="searchterm" type="text" name="searchterm" placeholder="Enter a key term.">
+    
+<input id="sub" type="button" value="Search">
+    
+<input id="back" type="button" onclick="history.go(-1)" value="Back">
+    </form> 
+    </div>
     
 <br>
     
-     <div class="borders">
+<div class="borders">
 
     <center class="borders">      
         <div id="results" style="display: flex; flex-wrap: wrap;"></div>   
@@ -120,15 +129,18 @@
              
     <h1 style="text-align: center;"># of Results: <span id="totalresults"></span></h1>
     
-<div class="paging-options" style="padding: 20px;">
-    <a href="#" onclick="previousPage()">Last Page</a>
+<div id="radio" style="text-align: center;">
+<br>
+<input id="1" type="radio" name="page" value="1">1
+<input id="2" type="radio" name="page" value="2">2
+<input id="3" type="radio" name="page" value="3">3
+<input id="4" type="radio" name="page" value="4">4
+<input id="5" type="radio" name="page" value="5">5
+<input id="6" type="radio" name="page" value="6">6
+</div><br>
     
-    <a href="#news" onclick="nextPage()" style=" float: right">Next Page</a>
-</div>   
-         
-         
        </div>
-
+    
 <br>
 
 <footer class="footer">
@@ -141,24 +153,53 @@
     | KSU IT4203 &copy; 2018
               
 </footer>
-              
-<script>
     
-    $(document).ready(function(){
-        $("ul").hide();
-    });
-        $("button").click(function(){
-            $("ul").show();
-                $(function(){
-		          var term = document.getElementById('search').value; 
-		          var parameter="?q="+term+"&startIndex=0&maxResults=10"; 
-		          var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
-        $.getJSON(service_point, function (json)
-        {
+    
+ <script>
+
+$(document).ready(function () {
+	$("#search").keypress(function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			$("#sub").click();
+		}
+	});
+	$('#sub, input[type="radio"]').click(function (search) {
+		if (this.id == "#sub") {
+			search.preventDefault();
+		}
+		var term = $("#search").val();
+		var page = document.getElementsByName("page");
+		
+		if (page[0].checked) {
+			var parameter="?q="+term+"&startIndex=0&maxResults=10"; 
+		}
+		else if (page[1].checked) {
+			var parameter="?q="+term+"&startIndex=10&maxResults=10"; 
+		}
+		else if (page[2].checked) {
+			var parameter="?q="+term+"&startIndex=20&maxResults=10"; 
+		}
+		else if (page[3].checked) {
+			var parameter="?q="+term+"&startIndex=30&maxResults=10"; 
+		}
+        else if (page[4].checked) {
+			var parameter="?q="+term+"&startIndex=40&maxResults=10"; 
+		}
+         else if (page[5].checked) {
+			var parameter="?q="+term+"&startIndex=50&maxResults=10"; 
+		}
+		else {
+			var parameter="?q="+term+"&startIndex=0&maxResults=10";
+		}
+		
+		var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
+		$.getJSON(service_point, function (json)
+		{
 			console.log(json);
 			var total=json.totalItems;
 			$("#totalresults").text(total); 
-			
+			$("#radio").css("visibility", "visible");
 			var resultHTML="";
 			for (i in json.items)
 			{
@@ -167,21 +208,21 @@
 				var cover="";
 				if (json.items[i].volumeInfo.imageLinks != null)
 					cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
-
-resultHTML+="<br><a href='bookdetails.html?id="+bookid+"'><br>"+booktitle+"</a>";
-
-resultHTML+="<br><img src='"+cover+"'><br>";
-
-resultHTML+="<br>";
-
+				
+				resultHTML+="<div class='bookdiv'>";
+				resultHTML+="<a href='bookinfo.html?id="+bookid+"'>"+booktitle+"</a>";
+				resultHTML+="<br><br><img src='"+cover+"'/><br>";
+				resultHTML+="</div>";;
+				
 			}
 			$("#results").html(resultHTML); 
-			$(".bookdiv").css("width", "300px");
+            $(".bookdiv").css("width", "300px");
+			
 		});
-    });
-  });
+	});
+});
     
-</script> 
+</script>   
     
 </body>
     
