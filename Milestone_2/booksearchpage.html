@@ -25,8 +25,11 @@
     }
     
     .background {
-        background-image: url(images.p.jpg);
-    }
+            background-image: url(mainimg.jpg);
+            border: 1px solid white;
+            text-align: center;
+            
+        }
     
     a:hover, a:visited, a:link, a:active {
         text-decoration: none;
@@ -60,13 +63,22 @@
         
     }
     
-    div.center  {
-        text-align: center;
-    }
-    
     footer {
+        
         text-align: center;
-    }
+        font-family: serif;
+        border: 2px solid white;
+        color: white;
+        background-color: black;
+        font-size: 1.0em;
+        
+        }
+    
+    .borders {
+            border: 1px solid white;
+            white-space: 20px;
+            background-color: black;
+        }
          
 </style>    
        
@@ -74,27 +86,40 @@
     
 <body>
     
-<nav>
-    <a href="../index.html">Home</a> |
-    <a href="../Milestone1.html">Milestone I</a> |
-    <a href="./milestone2.html">Milestone II</a> |
-    <a href="../IT4203/Milestone3.html">Milestone III</a>       
-</nav>
-   <div class="background">    
-   <div class="center">
-    <h1 id="title">Google Books Search</h1>
-            
-    <input placeholder="Search..." id="search" autofocus/>
+<div class="background">
+        
+    <h1>Google Books Search: <span id="shelf"></span></h1>
+    
+    <nav>
+            <a href="index.html">Home</a> |
+            <a href="Milestone1.html">Milestone I</a> |
+            <a href="Milestone_2/milestone2.html">Milestone II</a> |
+            <a href="Milestone3.html">Milestone III</a>
+    </nav>  
+</div> 
+    
+<br>    
+    <div style="text-align: center;">
+    <input placeholder="Search..." id="search" style="height: 30px; width: 300px;"autofocus/>
         
     <button><a href=""></a>Search</button>
-            
-    <button><a href="../Milestone_2/milestone2.html">Back</a></button>
-            
-    <div id="results" style="border: 1px solid white; display: flex; flex-wrap: wrap;"></div>
+     
+    <button><a href="../Milestone_2/milestone2.html">Back</a></button></div>  
+    
+<br>
+    
+     <div class="borders">
+
+    <center class="borders">      
+        <div id="results" style="display: flex; flex-wrap: wrap;"></div>   
+     </center>
+        
           
-    <h1># of Results: <span id="totalresults"></span></h1>
-    </div>
-       </div>  
+    <h1 style="text-align: center;"># of Results: <span id="totalresults"></span></h1>
+    
+       </div>
+
+<br>
 
 <footer class="footer">
         
@@ -116,7 +141,7 @@
             $("ul").show();
                 $(function(){
 		          var term = document.getElementById('search').value; 
-		          var parameter="?q="+term+"&startIndex=0&maxResults=20"; 
+		          var parameter="?q="+term+"&startIndex=0&maxResults=10"; 
 		          var service_point="https://www.googleapis.com/books/v1/volumes/"+parameter;
         $.getJSON(service_point, function (json)
         {
@@ -133,10 +158,10 @@
 				if (json.items[i].volumeInfo.imageLinks != null)
 					cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
 
-resultHTML+="<div class='bookdiv'><br>";
-resultHTML+="<br><br><img src='"+cover+"' style='float: left'>";
-resultHTML+="<a href='bookinfo.html?id="+bookid+"'><br>"+booktitle+"</a>";
-resultHTML+="</div>";
+resultHTML+="<br><img src='"+cover+"'<br>";
+resultHTML+="<br><a href='bookinfo.html?id="+bookid+"'><br>"+booktitle+"</a>";
+resultHTML+="<br>";
+
 			}
 			$("#results").html(resultHTML); 
 			$(".bookdiv").css("width", "300px");
@@ -146,10 +171,5 @@ resultHTML+="</div>";
     
 </script> 
     
-    
-
-
-
-
 </body>
 </html>
