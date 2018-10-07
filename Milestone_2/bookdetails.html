@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 
 <html>
+    
 <head>
 	<title>Google Book Info</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script>
     $(function(){
-		var id= ''; //or get the parameter value from the URL ?id=Wfan6L9RGgYC; you can Google how to do it.
+        var url = new URL(window.location.href);
+		var id= url.searchParams.get('id');
 		var service_point="https://www.googleapis.com/books/v1/volumes/"+id;
         $.getJSON(service_point, function (json)
         {
@@ -29,14 +31,122 @@
 		}); 
     });
 </script>
+    
+<style>
+    
+       button {
+        font-size: 1.3em;
+        background: none;
+        border: none;
+        color: white;
+    }
+    
+    body {
+        color: white;
+        background-color: black;
+    }
+    
+    .background {
+            background-image: url(mainimg.jpg);
+            border: 1px solid white;
+            text-align: center;
+            
+        }
+    
+    a:hover, a:visited, a:link, a:active {
+        text-decoration: none;
+        color: white;
+    }
+    
+    .search {
+        border: 1px solid black;
+    }
+    
+    .border {
+        border: 1px solid white;
+        width: 800px;
+    }
+    
+    * {
+    box-sizing: border-box;
+}
+    
+    @media (max-width: 500px) {
+    section {
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+      
+}
+    
+    nav {
+        
+        text-align: center;
+        
+    }
+    
+    footer {
+        
+        text-align: center;
+        font-family: serif;
+        border: 2px solid white;
+        color: white;
+        background-color: black;
+        font-size: 1.0em;
+        
+        }
+    
+    .borders {
+            border: 1px solid white;
+            white-space: 20px;
+            background-color: black;
+        } 
+    
+</style>
+    
+    
 </head>
 
 <body>
+    
+<div class="background">
+        
+    <h1>Google Books Search: <span id="shelf"></span></h1>
+    
+    <nav>
+            <a href="../index.html">Home</a> |
+            <a href="../Milestone1.html">Milestone I</a> |
+            <a href="./milestone2.html">Milestone II</a> |
+            <a href="Milestone3.html">Milestone III</a>
+    </nav>
+    
+</div> 
+    
+    <br>
+    
+    <div class="borders">
+
+   
 <h1 id="title"></h1>
 <p><a id="webpage"></a></p>
 <img id="cover" height=200 />
 <p>Categories:</p>
 <div id="category"></div>
-
+    </div>
+    
+    <br>
+    
+<footer class="footer">
+        
+    Last Updated: October 6, 2018 |
+    <a href="../index.html">Home</a> |
+    <a href="../Milestone1.html">Milestone I</a> |
+    <a href="./milestone2.html">Milestone II</a> |
+    <a href="../IT4203/Milestone3.html">Milestone III</a>
+    | KSU IT4203 &copy; 2018
+              
+</footer>
+            
 </body>
+    
 </html>

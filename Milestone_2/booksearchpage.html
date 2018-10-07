@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 
 <html>
+    
 <head>
+    
     <meta charset="utf-8">
     
 	<title>Google Books Search</title>
@@ -91,14 +93,16 @@
     <h1>Google Books Search: <span id="shelf"></span></h1>
     
     <nav>
-            <a href="index.html">Home</a> |
-            <a href="Milestone1.html">Milestone I</a> |
-            <a href="Milestone_2/milestone2.html">Milestone II</a> |
+            <a href="../index.html">Home</a> |
+            <a href="../Milestone1.html">Milestone I</a> |
+            <a href="./milestone2.html">Milestone II</a> |
             <a href="Milestone3.html">Milestone III</a>
-    </nav>  
+    </nav>
+    
 </div> 
     
-<br>    
+<br>  
+    
     <div style="text-align: center;">
     <input placeholder="Search..." id="search" style="height: 30px; width: 300px;"autofocus/>
         
@@ -113,10 +117,16 @@
     <center class="borders">      
         <div id="results" style="display: flex; flex-wrap: wrap;"></div>   
      </center>
-        
-          
+             
     <h1 style="text-align: center;"># of Results: <span id="totalresults"></span></h1>
     
+<div class="paging-options" style="padding: 20px;">
+    <a href="#" onclick="previousPage()">Last Page</a>
+    
+    <a href="#news" onclick="nextPage()" style=" float: right">Next Page</a>
+</div>   
+         
+         
        </div>
 
 <br>
@@ -158,8 +168,10 @@
 				if (json.items[i].volumeInfo.imageLinks != null)
 					cover=json.items[i].volumeInfo.imageLinks.smallThumbnail;
 
-resultHTML+="<br><img src='"+cover+"'<br>";
-resultHTML+="<br><a href='bookinfo.html?id="+bookid+"'><br>"+booktitle+"</a>";
+resultHTML+="<br><a href='bookdetails.html?id="+bookid+"'><br>"+booktitle+"</a>";
+
+resultHTML+="<br><img src='"+cover+"'><br>";
+
 resultHTML+="<br>";
 
 			}
@@ -172,4 +184,5 @@ resultHTML+="<br>";
 </script> 
     
 </body>
+    
 </html>
