@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+
+<html>
+    
+  <head>
+      
+    <meta charset='utf-8'/>
+      
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+      
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      
+<style>
+ 
+    .header {
+        text-align: center;
+        color: white;
+        background-color: black;
+    }  
+    
+    body {
+        background-color: orange;
+        color: black;
+    }
+    
+    nav {
+        color: white;
+        text-align: center;
+        background-color: orange;
+        font-size: 1.4em;
+    }
+    
+    nav a {
+        text-decoration: none;
+        color: white;
+    }
+    
+    a: active {
+        color: blue;
+    }
+    
+    .bookshelf {
+        border-bottom: 1px solid purple;
+        white-space: 2px;
+        text-align: left;
+        text-align: center;
+    }
+    
+    .info {
+        border: 3px solid black;
+        background-color: rgb(136, 30, 228);
+    }
+
+    
+    .footer {
+        color: white;
+        background-color: black;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .footer a {
+        color: white;
+    }
+    
+</style>
+      
+  </head>
+    
+  <body>
+  
+    <!--Header and Nav-->
+<div class="header">      
+    <h1>Google Books Search </h1>
+        <nav>
+            <a href="../index.html">Home</a> |
+            <a href="../Milestone1.html">Milestone I</a> |
+            <a href="../Milestone_2/milestone2.html">Milestone II</a> |
+            <a href="Milestone3.html">Milestone III</a>
+        </nav> 
+</div>
+      
+      <br>
+<div class="info">  
+<!--Bookshelf-->     
+      <details style="float: left">
+          <summary>My BookShelf</summary>
+            <div id="booksShelf" class="bookshelf"></div>   
+      </details>
+      
+<!--Search Bar-->      
+      <form id="searchbar">
+          <input type="text" id="searchTerm" class="text"  />
+          <input type="button" id="button" class="btn" value="Search" />
+      </form>  
+
+	
+<!--Search results-->     
+      <h4 style="text-align: center; border-bottom: 1-x solid black">Search Results</h4>
+      <div id="books" class="results" style="text-align: center"></div>
+    
+      
+<!--Pagification-->   
+     <center> <span id="pages" class="pagification"></span></center>
+  </div>     
+<!--Book Details-->     
+      <div id="book" style="width: 800px; max-height: 100px"></div>
+        
+    <!--Footer-->
+<footer class="footer">
+        
+    Last Updated: October 6, 2018 |
+    <a href="../index.html">Home</a> |
+    <a href="../Milestone1.html">Milestone I</a> |
+    <a href="../Milestone_2/milestone2.html">Milestone II</a> |
+    <a href="../IT4203/Milestone3.html">Milestone III</a>
+    | KSU IT4203 &copy; 2018
+              
+</footer>
+      
+  <!--Search--> 
+<script>
+  $(document).ready(function ()
+    {
+        var servicesite="https://www.googleapis.com/books/v1/volumes/?q=";
+		var servicePoint1="https://www.googleapis.com/books/v1/users/110130775080784019945/bookshelves/1001/volumes";
+	
+		searchShelf(servicePoint1);
+		
+		$("#history").on('click', function (event)
+        {
+			var term = event.target.textContent;
+            $("#searchTerm").val(term);
+            var url = servicesite + $("#searchTerm").val();
+			searchBooks(url);
+        });
+
+		$("#button").click(function ()
+        {
+            saveSearch($("#searchTerm").val());
+            var url = servicesite + $("#searchTerm").val() + "&startIndex=0&maxResults=10";
+			var pages = 0;
+			searchBooks(url);
+			$("#pages").html("<br>");
+			for (i=1;i<=5;i++)
+				$("#pages").append("<a href='#' id='page"+i+"' class='pagelink'>"+i+"</a> ");
+			$("#page1").focus()
+        });
+		
+		$("#pages").on('click', function (event)
+        {
+            var number = event.target.textContent;
+			number = (number-1)*10;
+            var url = servicesite + $("#searchTerm").val() + "&startIndex=" + number + "&maxResults=10";
+            searchBooks(url);
+        });
+		
+		$("#allbooks").click(function ()
+        {
+            $("#searchsect").css("display", "block");
+			$("#shelfsect").css("display", "none");
+        });
+		
+		$("#bookshelf").click(function ()
+        {
+            $("#shelfsect").css("display", "block");
+			$("#searchsect").css("display", "none");
+        });
+		
+		$("#searchTerm").keypress(function(event) {
+			if (event.keyCode === 13) {
+				$("#button").click();
+			}
+		});
+		
+    });
+
+    function searchBooks(servicePoint)
+    {
+        $.getJSON(servicePoint, function (jsonData)
+        {
+            $("#books").html("");
+			$.each(jsonData.items, function (index)
+            {
+				if (jsonData.items[index].volumeInfo.imageLinks != void(0) || typeof jsonData.items[index].volumeInfo.imageLinks != 'undefined')
+				{
+					$("#books").append("<img class='bookicon' id='" + jsonData.items[index].id + "' src='" + jsonData.items[index].volumeInfo.imageLinks.smallThumbnail + "' width=80 />          ");
+				}
+			});
+            $(".bookicon").on('click', function () { getBookDetails($(this).attr("id")); });
+        });
+    }
+
+    function searchShelf(servicePoint1)
+    {
+		$.getJSON(servicePoint1, function (jsonData)
+        {
+            $("#booksShelf").html("");
+			$.each(jsonData.items, function (index)
+            {
+				if (jsonData.items[index].volumeInfo.imageLinks != void(0) || typeof jsonData.items[index].volumeInfo.imageLinks != 'undefined')
+				{
+					$("#booksShelf").append("<img class='bookicon' id='" + jsonData.items[index].id + "' src='" + jsonData.items[index].volumeInfo.imageLinks.smallThumbnail + "' width=80 />   ");
+				}
+			});
+            $(".bookicon").on('click', function () { getBookDetails($(this).attr("id")); });
+        });
+    }
+
+    function getBookDetails(bookid)
+    {
+		$.getJSON("https://www.googleapis.com/books/v1/volumes/" + bookid, function (jsonData)
+        {
+            $("#book").html("<h2 style='text-align: center;'>" + jsonData.volumeInfo.title + "</h2>");
+			if (jsonData.volumeInfo.imageLinks == void(0) || typeof jsonData.volumeInfo.imageLinks == 'undefined')
+			{
+				$("#book").append("<div style='float: left; margin-right:20px'/>");
+			}
+			else
+			{
+				$("#book").append("<img style='float: left; margin-right:20px' src='" + jsonData.volumeInfo.imageLinks.smallThumbnail + "' width=120 />");
+			}
+            $("#book").append("<p>By " + jsonData.volumeInfo.authors + "</p>");
+            $("#book").append("<p>Published by " + jsonData.volumeInfo.publisher + " in " + jsonData.volumeInfo.publishedDate + "<br />");
+            $("#book").append(jsonData.volumeInfo.description + "<br><br>");
+        });
+    }
+
+    function saveSearch(term)
+    {
+        $("#history").append("<span class='searchterm'>" + term + "</span> ");
+    }
+    
+      </script>
+
+      
+  </body>
+    
+</html>
