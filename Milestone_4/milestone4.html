@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+
+<html>
+    
+  <head>
+      
+    <meta charset='utf-8'/>
+      
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+      
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js"> </script>
+      
+<style>
+ 
+body {
+	font-family: serif
+	text-align: center;
+    background-image: url(fall.jpeg);
+}
+    
+.header {
+    background-color: orangered
+    }
+    
+nav {
+    text-align: center;
+    }
+
+h1 {
+        text-align: center;
+    }
+    
+.book {
+	border: solid black;
+	border-width: 1px;
+	width: 35%;
+	margin: 5px;
+    background-color: white;
+}
+      
+.bookDetails {
+	width: 90%;
+    background-color: lightcyan;
+    opacity: 2%;
+}
+    
+#results {
+	display: flex; 
+	flex-wrap: wrap;
+	text-align: center;
+}
+     
+#results h2 {
+	font-size: 16px;
+}
+    
+#search, #more, #searchTerm, #shelf {
+	font-family: serif;
+	font-size: 14px;
+	padding: 1px 10px;
+}
+    
+    nav {
+        color: white;
+        text-align: center;
+        background-color: darkorange;
+        font-size: 1.4em;
+    }
+    
+    nav a {
+        text-decoration: none;
+        color: white;
+    }
+    
+a: active {
+        color: blue;
+    }
+  
+    .bar {
+        text-align: center;
+}
+    
+#box {
+	display: flex; 
+	flex-wrap: wrap;
+	border: 3px solid red;
+	width: 800px;
+}
+    
+.boxitem {
+	border: thin solid black;
+	background-color: #ffeecc;
+	width: 99%;
+	margin: 0.3%;
+	height:80px;
+}
+    
+.view a {
+    text-decoration: none;
+    } 
+    
+.view {
+    text-align: center;
+    }
+    
+.footer {
+    color: white;
+    background-color: darkorange;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    }
+    
+.footer a {
+        color: white;
+    }
+    
+.glview a {
+       text-decoration: none;
+    }
+
+.glview {
+        color: white;
+        font-size: 18px;
+    }
+    
+</style>
+      
+  </head>
+    
+  <body>
+  
+    <!--Header and Nav-->
+<div class="header">      
+    <h1>Books Search IV </h1>
+        <nav>
+            <a href="../index.html">Home</a> |
+            <a href="../Milestone1.html">Milestone I</a> |
+            <a href="../Milestone_2/milestone2.html">Milestone II</a> |
+            <a href="../Milestone_3/milestone3.html">Milestone III</a> |
+            <a href="milestone4.html">Milestone IV</a>
+        </nav> 
+</div>
+      
+      <br>
+ <div class="bar">    
+     <input type="text" id="searchTerm" />
+     <input type="button" id="search" value="Search" />
+     <input type="button" id="more" value="Load More" />    <input type="button" id="shelf" value="My Bookshelf" />
+     
+</div> 
+      
+      <br>
+<div class="view">
+    <a href="#" id='btnList' class="glview">List View</a> | <a href="#" id='btnGrid' class="glview">Grid View</a>
+</div>
+      
+<div id="results" data-layout="List"></div>
+      <br>
+<div id="details"></div>      
+        <br>
+<!--Footer-->
+<footer class="footer">
+        
+    Last Updated: October 6, 2018 |
+    <a href="../index.html">Home</a> |
+    <a href="../Milestone1.html">Milestone I</a> |
+    <a href="../Milestone_2/milestone2.html">Milestone II</a> |
+    <a href="../IT4203/Milestone3.html">Milestone III</a>
+    <a href="milestone4.html">Milesstone IV</a>
+    | KSU IT4203 &copy; 2018
+              
+</footer>
+      
+<!--book info--> 
+	
+<script id="booktemplate" type="text/template">
+	{{#items}}
+	<div class='book'>
+		<h2>{{volumeInfo.title}}</h2>
+		<img id='{{id}}' class='bookIcon' src='{{volumeInfo.imageLinks.smallThumbnail}}' width='90' />
+	</div>
+	{{/items}}
+</script>
+
+<!--details-->
+<script id="booktemplate2" type="text/template">
+	<div class='bookDetails'>
+		<h2>{{volumeInfo.title}}</h2>
+		<img src='{{volumeInfo.imageLinks.small}}' />
+		
+		<p>By {{volumeInfo.authors}}</p>
+		<p>Published by {{volumeInfo.publisher}} on {{volumeInfo.publishedDate}}</p>
+		<div>Description:{{{volumeInfo.description}}}</div>
+	</div>
+</script>
+
+<script type="text/javascript">
+$(document).ready(function ()
+{
+
+	var number = 0;
+    $("#search").click(function ()
+    {
+		//reset page count
+		number = 0;
+		$("#results").html("Searching ...");
+		$.getJSON("https://www.googleapis.com/books/v1/volumes/?q="+$("#searchTerm").val()+"&startIndex="+number+"&maxResults=10", function (jsonData)
+		{
+            $("#results").html("");
+			var template = $('#booktemplate').html();
+			var html = Mustache.render(template, jsonData);
+			$("#results").html(html);
+        });
+    });
+	
+	$("#results").on('click', '.bookIcon', function(event)
+    {
+		var bookid = $(this).attr("id");
+		$("#details").html;
+		$.getJSON("https://www.googleapis.com/books/v1/volumes/"+bookid, function (jsonData)
+		{
+            $("#details").html("");
+			var template = $('#booktemplate2').html();
+			var html = Mustache.render(template, jsonData);
+			$("#details").html(html);
+        });
+    });
+	
+	$("#more").click(function ()
+    {
+		number = number+10;
+		$("#results").prepend("<p id='loading'>Searching ...</p>");
+		$.getJSON("https://www.googleapis.com/books/v1/volumes/?q="+$("#searchTerm").val()+"&startIndex="+number+"&maxResults=10", function (jsonData)
+		{
+			var template = $('#booktemplate').html();
+			var html = Mustache.render(template, jsonData);
+			$("#loading").html("");
+			$("#results").prepend(html);
+        });
+    });
+	
+	$("#shelf").on('click', function(event)
+    {
+		$("#results").html;
+		$.getJSON("https://www.googleapis.com/books/v1/users/110130775080784019945/bookshelves/1001/volumes", function (jsonData)
+		{
+            $("#results").html("");
+			var template = $('#booktemplate').html();
+			var html = Mustache.render(template, jsonData);
+			$("#results").html(html);
+        });
+    });
+	
+	$("#btnGrid").click(function (){
+		$(".book").css("width", "25%");
+		$("#results h2").css("font-size", "14px");
+		$("#results").attr("data-layout","Grid");
+	});
+    
+	$("#btnList").click(function (){
+		$(".book").css("width", "99%");
+		$("#results h2").css("font-size", "24px");
+		$("#results").attr("data-layout","List");
+	});
+});
+
+</script>
+
+      
+  </body>
+    
+</html>
