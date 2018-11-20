@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Leman Galler Final Term Project</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js">
+      </script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="finalProject.css">
+
+
+  </head>
+  <body>
+    <h1>IT 4203 Final Project<h1>
+      <h2>By Nathanael Leman and Ian Galler<h2>
+        <br>
+        <br>
+    <!-- API Key: b0b6b58752ff5adc13682813e97f9dd9
+    Example request: https://api.themoviedb.org/3/movie/550?api_key=b0b6b58752ff5adc13682813e97f9dd9-->
+    <div id="searchWrapper">
+      <div id="searchBox">
+        </div>
+        <input type="text" id="userSearch" placeholder="Search movies...">
+        <button id="searchButton"><i class="fa fa-search"></i></button>
+        </div>
+        <div id="buttonHolder">
+        <button id="all" onclick="searchType(all)">All</button>
+        <button id="movies">Movies</button>
+        <button id="tvShows">TV Shows</button>
+        <button id="castmembers">Cast Members</button>
+        </div>
+    <div id="discover">
+      </div>
+    <!--Discover API URL: https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=b0b6b58752ff5adc13682813e97f9dd9 -->
+
+<!--Search Function-->
+    <script>
+      //variables
+      var searchEntered = $("#userSearch").value;
+      var searchType = "";
+      //functions
+      function searchType(id) {
+        console.log(id);
+      }
+
+      function search(searchEntered, searchType) {
+        $.ajax({
+          url: "https://api.themoviedb.org/3/search/" + searchType +"?api_key=b0b6b58752ff5adc13682813e97f9dd9&language=en-US&query=" + searchEntered + "&page=1"
+        }).done(function(data){
+
+      });
+      //click listeners
+      $("#searchButton").addEventListener("click", function(){
+        search();
+      });
+      //enter listener
+      $("#userSearch").addEventListener('keypress', function (e) {
+          var key = e.which || e.keyCode;
+          if (key === 13) {
+            search();
+
+        })
+      }
+      </script>
+
+  </body>
+</html>
