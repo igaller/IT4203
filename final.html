@@ -8,11 +8,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js">
       </script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="finalProject.css">
 
+    <style>
+      #searchEntered {
+        font-size: 20px;
+      }
 
+      #searchButton {
+        font-size: 20px;
+      }
+
+      #buttonHolder {
+        display: block;
+      }
+
+      #searchResults {
+        display: flex;
+	      flex-wrap: wrap;
+	      text-align: center;
+      }
+
+      .glview {
+        border: solid black;
+	      border-width: 1px;
+	      width: 35%;
+	      margin: 5px;
+        background-color: white;
+      }
+
+    </style>
   </head>
   <body>
     <h1>IT 4203 Final Project<h1>
@@ -24,15 +49,23 @@
     <div id="searchWrapper">
       <div id="searchBox">
         </div>
-        <input type="text" id="userSearch" placeholder="Search movies...">
+        <input type="text" id="userSearch" placeholder="Search everything...">
         <button id="searchButton"><i class="fa fa-search"></i></button>
         </div>
         <div id="buttonHolder">
-        <button id="all" onclick="searchType(all)">All</button>
+        <button id="all">All</button>
         <button id="movies">Movies</button>
         <button id="tvShows">TV Shows</button>
         <button id="castmembers">Cast Members</button>
         </div>
+
+        <div class="views">
+            <a href="#" id="btnList">List View</a>
+            <a href="#" id="btnGrid">Grid View</a>
+        </div>
+
+        <div id="searchResults" data-layout="List">
+          </div>
     <div id="discover">
       </div>
     <!--Discover API URL: https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=b0b6b58752ff5adc13682813e97f9dd9 -->
@@ -40,32 +73,97 @@
 <!--Search Function-->
     <script>
       //variables
-      var searchEntered = $("#userSearch").value;
-      var searchType = "";
-      //functions
-      function searchType(id) {
-        console.log(id);
-      }
+      var searchEntered = "";
+      var searchType = "multi";
 
+  var allView = "" +
+  "<img src=\"https://image.tmdb.org/t/p/w185_and_h278_bestv2{{poster_path}}\"/><br>" +
+  "<h3>{{title}}</h3><br>" +
+  "<p> {{{overview}}}";
+      var moviesView = "";
+
+      var tvShowsView = "";
+      "<img src=\"https://image.tmdb.org/t/p/w185_and_h278_bestv2{{poster_path}}\"/><br>" +
+      "<h3>{{name}}</h3><br>" +
+      "<p> {{{overview}}}";
+      var castmembers = "";
+
+      //functions
       function search(searchEntered, searchType) {
+
         $.ajax({
           url: "https://api.themoviedb.org/3/search/" + searchType +"?api_key=b0b6b58752ff5adc13682813e97f9dd9&language=en-US&query=" + searchEntered + "&page=1"
         }).done(function(data){
+          var results = data.results;
+          console.log(results);
+          for(var i=0;i<results.length;i++) {
 
-      });
+          var display = Mustache.render(allView, results[i]);
+          $("#searchResults").append(display);
+        }
+      })
+    }
       //click listeners
-      $("#searchButton").addEventListener("click", function(){
-        search();
+      $("#searchButton").click(function(){
+          $("#searchResults").empty();
+        searchEntered  = $("#userSearch").val();
+        search(searchEntered, searchType);
       });
+
+      $("#all").click(function() {
+        searchType = "multi";
+        document.getElementById("userSearch").placeholder='Search everything...';
+      })
+      $("#movies").click(function() {
+        searchType = "movie";
+        document.getElementById("userSearch").placeholder='Search movies...';
+      })
+      $("#tvShows").click(function() {
+        searchType = "tv";
+        document.getElementById("userSearch").placeholder='Search TV Shows...';
+      })
+      $("#castmembers").click(function() {
+        searchType = "person";
+        document.getElementById("userSearch").placeholder='Search cast members...';
+      })
+
       //enter listener
-      $("#userSearch").addEventListener('keypress', function (e) {
+      document.getElementById("userSearch").addEventListener('keypress', function (e) {
           var key = e.which || e.keyCode;
           if (key === 13) {
-            search();
+              $("#searchResults").empty();
+            searchEntered = $("#userSearch").val();
+            search(searchEntered, searchType);
+          }
+      });
 
-        })
-      }
       </script>
+
+<!--Grid and List View-->
+      <script>
+
+          $("#btnGrid").click(function() {
+            $("glview").css("width", "25%");
+            $("#searchResults").attr("data-layout", "Grid");
+          });
+
+          $("btnList").click(function() {
+            $("glview").css("width", "99%");
+            $("#searchResults").attr("data-layout", "List");
+          });
+
+      </script>
+
+<!--Pagification-->
+      <script>
+
+      </script>
+
+<!--Sort-->
+      <script>
+
+      </script>
+
 
   </body>
 </html>
